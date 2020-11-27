@@ -1,0 +1,10 @@
+entorno
+build
+archivos-prueba
+.project
+.cproject
+Elena
+parser.o
+parser.output
+scanner.o
+lex.yy.c
