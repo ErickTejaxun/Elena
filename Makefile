@@ -2,27 +2,28 @@ PROJECT_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 all:	Elena
 
-OBJ = parser.o scanner.o 
+OBJ = ./dist/parser.o ./dist/scanner.o 
 
 Elena : $(OBJ)     #segunda fase de la tradicción. Generación del código ejecutable 
+	cp -r ./src ./dist	
+	cd dist		
 	g++ -o Elena $(OBJ)
 
-parser.o : parser.c        #primera fase de la traducción del analizador sintáctico
-	g++ -c -o parser.o  parser.c 
+./dist/parser.o : ./dist/parser.c        #primera fase de la traducción del analizador sintáctico
+	g++ -c -o ./dist/parser.o  ./dist/parser.c 
 	
-scanner.o : lex.yy.c		#primera fase de la traducción del analizador léxico
-	g++ -c -o scanner.o  lex.yy.c 	
+./dist/scanner.o : ./dist/lex.yy.c		#primera fase de la traducción del analizador léxico	
+	g++ -c -o ./dist/scanner.o  ./dist/lex.yy.c -I./dist/parser.h	
 
-parser.c : parser.y       #obtenemos el analizador sintáctico en C
-	bison -d -v parser.y -o parser.c	
+./dist/parser.c :       #obtenemos el analizador sintáctico en C
+	bison -d -v -o ./dist/parser.c ./dist/parser.y 	
 
-lex.yy.c: scanner.l	#obtenemos el analizador léxico en C
-	flex scanner.l
+./dist/lex.yy.c: 	#obtenemos el analizador léxico en C
+	flex  --outfile=./dist/lex.yy.c ./dist/scanner.l
 
 prueba: 
-	./Elena ./archivos-prueba/Gala_factorial.gdl salida.cpp
+	Elena ./archivos-prueba/Gala_factorial.gdl salida.cpp
 
 clean : 
-	rm  -f  *.c *.o 
-	rm  parser.h Elena
-	rm  parser.output
+	rm -f  ./dist/*.c ./dist/*.o ./dist/*.h ./dist/*.output	
+	rm -f ./dist/*.y ./dist/*.l ./dist/*.cpp
