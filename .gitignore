@@ -1,1 +1,6 @@
-dist
+thirdparty
+.antlr
+.vscode/c_cpp_properties.json
+output
+generated
+parser
