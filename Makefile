@@ -37,4 +37,4 @@ $(OUTPUT)/%.o : $(GENERATED)/%.cpp
 $(GENERATED)/%.cpp: $(GENERATED)/.generated;
 
 dirs:; mkdir -p $(OUTPUT) $(GENERATED) 
-clean:; rm -rf $(OUTPUT) $(GENERATED)
+clean:; rm -rf $(OUTPUT) $(GENERATED) parser
