@@ -36,5 +36,8 @@ $(OUTPUT)/%.o : $(GENERATED)/%.cpp
 
 $(GENERATED)/%.cpp: $(GENERATED)/.generated;
 
+Elena: 
+	g++ main.cpp -std=c++17 -o Elena
+
 dirs:; mkdir -p $(OUTPUT) $(GENERATED) 
 clean:; rm -rf $(OUTPUT) $(GENERATED) parser
