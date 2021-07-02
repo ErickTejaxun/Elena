@@ -13,7 +13,7 @@ GRAMMAR=Elena
 ANTLR4=$(JAVA) -jar thirdparty/antlr/antlr-4.9.1-complete.jar
 #ANTLR4=antlr4
 
-ANTLRGEN=BaseListener Lexer Listener Parser 
+ANTLRGEN=BaseVisitor Lexer Visitor Parser 
 OBJS=$(addsuffix .o,$(addprefix $(OUTPUT)/$(GRAMMAR),$(ANTLRGEN)))
 GSOURCES=$(addsuffix .cpp,$(addprefix $(GENERATED)/$(GRAMMAR),$(ANTLRGEN)))
 
@@ -28,7 +28,7 @@ parser: dirs antlr4 parser.cpp $(OBJS)
 antlr4: $(GENERATED)/.generated;
  
 $(GENERATED)/.generated: $(GRAMMAR).g4
-	$(ANTLR4) -Dlanguage=Cpp -o $(GENERATED) $(GRAMMAR).g4
+	$(ANTLR4) -Dlanguage=Cpp -no-listener -visitor -o $(GENERATED) $(GRAMMAR).g4
 	@touch $(GENERATED)/.generated
 
 $(OUTPUT)/%.o : $(GENERATED)/%.cpp
